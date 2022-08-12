@@ -1,0 +1,21 @@
+1.Don't use #pragma pack(4) in your OI program!!!
+For Java Developers
+1.unordered_map is different from java.util.HashMap.
+In C++,when I execute
+	unordered_map<int,int>map{};
+	map.insert({1,1});
+	map.insert({1,2});
+	cout<<map.at(1);
+The output is 1.
+In Java,when I execute
+	HashMap<Integer,Integer>map=new HashMap<>();
+	map.put(1,1);
+	map.put(1,2);
+	System.out.println(map.get(1));
+The output is 2.
+You should use this code to change values of maps:
+	unordered_map<int,int>map{};
+	map.insert({1,1});
+	map.at(1)=2;
+	cout<<map.at(1);
+The output is 2.
