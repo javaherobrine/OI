@@ -13,17 +13,8 @@ private:
 		}
 	}
 public:
-	BigInteger operator +(const BigInteger& rhs){
-		BigInteger&p,n;
-		if(isNegate^rhs.isNegate){
-			if(isNegate){
-				p=*this;
-				n=rhs;
-			}else{
-				p=rhs;
-				n=*this;
-			}
-		}
+	void operator +=(const BigInteger rhs){
+
 	}
 	BigInteger(string s){
 		auto iter=s.begin();
