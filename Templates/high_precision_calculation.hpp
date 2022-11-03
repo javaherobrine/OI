@@ -61,6 +61,9 @@ public:
 		}
 	}
 	int operator [](const unsigned int& rhs){
+		if(rhs>=32*value.size()){
+			return 0;
+		}
 		return at(value[rhs/32],rhs%32);
 	}
 	void operator >>=(const unsigned int& rhs){
@@ -85,6 +88,36 @@ public:
 	}
 	void operator +=(const bigint_bit& rhs){
 
+	}
+	void operator -=(const bigint_bit& rhs){
+
+	}
+	void operator ^=(const bigint_bit& rhs){
+		auto iter=value.begin();
+		auto iter0=rhs.value.begin();
+		for(;iter!=value.end()&&iter0!=rhs.value.end();){
+			*iter^=*iter0;
+			iter++;
+			iter0++;
+		}
+		if(iter0!=rhs.value.end()){
+			for(;iter0!=rhs.value.end();){
+				value.push_back(*iter0);
+			}
+		}
+	}
+	void operator &=(const bigint_bit& rhs){
+		auto iter=value.begin();
+		auto iter0=rhs.value.begin();
+		for(;iter!=value.end()&&iter0!=rhs.value.end();){
+			*iter&=*iter0;
+		}
+		if(iter!=value.end()){
+			for(;iter!=value.end();iter++){
+				value.erase(iter);
+				iter--;
+			}
+		}
 	}
 	bigint_bit(const unsigned int& value0){
 		if(value<0){
