@@ -1,4 +1,4 @@
-/*#include<vector>
+#include<vector>
 struct union_find{
 	size_t size;
 	std::vector<int>father;
@@ -35,7 +35,7 @@ struct union_find{
 	bool is_connected(const int&p,const int&q){
 		return find(p)==find(q);
 	}
-};*/
+};
 //simple one(for OI)
 int father[114514];
 int find(const int&x){
