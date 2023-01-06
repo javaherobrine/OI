@@ -1,54 +1,34 @@
-#include"union_find.hpp"
-#include<vector>
-#include<algorithm>
-using namespace std;
-struct Node;
-struct Edge;
-int kruskal(vector<Edge>&);
-struct Edge{
-	int p,q,w;
-	bool operator <(const Edge& rhs) const{
-		return w<rhs.w;
-	}
-};
 #include<bits/stdc++.h>
 using namespace std;
-struct Node{
-	vector<pair<int,int>> linkto;//first:next and second:weight
+struct Edge{
+	int p,w,next=-1;
 };
-vector<int> dijkstra(vector<Node>& graph,int source){//Index starts from 0 instead of 1
-	vector<int> dis(graph.size(),2147483647);
-	vector<bool> color(graph.size(),false);
-	priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> q;
-	q.push({0,source});
-	dis[source]=0;
-	while(q.size()){
-		pair<int,int> p=q.top();
-		q.pop();
-		if(color[p.second]){
-			continue;
-		}
-		color[p.second]=true;
-		for(auto iter=graph[p.second].linkto.begin();iter!=graph[p.second].linkto.end();iter++){
-			if(color[iter->first])
-				continue;
-			dis[iter->first]=min(iter->second+p.first,dis[iter->first]);
-			q.push({dis[iter->first],iter->first});
+struct Node{
+	vector<pair<int,int>> linkto;
+};
+struct Graph{
+	vector<Node> graph;
+	Graph(vector<Node> v){
+		graph=v;
+	}
+	Graph(vector<Edge>& edges,vector<size_t>& head){
+		graph=vector<Node>(head.size());
+		for(size_t i=0;i<head.size();i++){
+			size_t current=head[i];
+			while(current!=-1){
+				graph[i].linkto.push_back({edges[current].p,edges[current].w});
+				current=edges[i].next;
+			}
 		}
 	}
-	return dis;
-}
-int kruskal(vector<Edge>& node){//compute MST
-	union_find uf{114514};
-	int sum=0;
-	sort(node.begin(),node.end());
-	for(auto iter=node.begin();iter!=node.end();iter++){
-		if(uf.is_connected(iter->p,iter->q)){
-			continue;
-		}else{
-			sum+=iter->w;
-			uf.union_elements(iter->p,iter->q);
+	Graph(vector<vector<int>>& matrix,int no_edge){
+		graph=vector<Node>(matrix.size());
+		for(size_t i=0;i<matrix.size();i++){
+			for(size_t j=0;j<matrix.size();j++){
+				if(matrix[i][j]!=no_edge){
+					graph[i].linkto.push_back({static_cast<int>(j),matrix[i][j]});
+				}
+			}
 		}
 	}
-	return sum;
-}
+};
