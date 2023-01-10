@@ -128,7 +128,7 @@ int compute(){//find a,b,c
         result.push_back(a);
         result.push_back(b);
         result.push_back(c);
-        map<int,int> temp{sums};//A copy of sum
+        map<int,int> temp(sums);//A copy of sum
         if(!(remove_element(temp,ab)&&remove_element(temp,bc)&&remove_element(temp,ac))){
             continue;
         }
