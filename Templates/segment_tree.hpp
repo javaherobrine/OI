@@ -20,8 +20,8 @@ struct SegmentTree{
 	int ask(int l,int r){
 		return ask(1,l,r);
 	}
-	void modify(int l,int r,int add){
-		modify(1,l,r,add);
+	void modify(int l,int r,int a){
+		modify(1,l,r,a);
 	}
 private:
 	void pushup(int id){
