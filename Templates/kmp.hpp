@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-static vector<int> next;//next[i]表示pat[0..pat]的最长公共前后缀
+static vector<int> next;//next[i]表示pat[0..i]的最长公共前后缀
 static string pat;
 void pre(const string& s){
 	pat=s;
