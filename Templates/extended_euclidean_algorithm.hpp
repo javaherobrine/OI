@@ -1,50 +1,24 @@
-#include<vector>
-using namespace std;
-class extended_euclidean_algorithm{
-private:
-	vector<int>qs{};
-	vector<int>ss{1,0};
-	vector<int>ts{0,1};
-	void gen(){
-		gen(a,b);
-		for(size_t i=1;i<qs.size();i++){
-			ss.push_back(ss[i-1]-ss[i]*qs[i-1]);
-			ts.push_back(ts[i-1]-ts[i]*qs[i-1]);
-		}
-		s=ss[ss.size()-1];
-		t=ts[ts.size()-1];
-		ss.clear();
-		ts.clear();
-		qs.clear();
-		ts.push_back(0);
-		ts.push_back(1);
-		ss.push_back(1);
-		ss.push_back(0);
+void swap(int &x,int& y){
+	int temp=y;
+	y=x;
+	x=temp;
+}
+int exgcd(int a,int b,int& s,int& t){//as+bt=gcd(a,b)
+	if(a%b){
+		int g=exgcd(b,a%b,s,t);
+		int p=a/b;
+		//gcd(a,b)=gcd(b,a)=gcd(b,a-bp)
+		//首先，gcd(a,b)=gcd(b,a)意味着s和t互换了
+		swap(s,t);
+		//其次，gcd(b,a)=gcd(b,a-bp)意味着解变了，as+bt=(a-bp)s'+bt'
+		//这个方程我们找一组可行解
+		//a(s-s')+b(t-t'+ps')=0
+		//一组解是s=s' t=t'-ps'
+		t-=p*s;
+		return g;
 	}
-	void gen(int a,int b){
-		int mod=a%b;
-		int q=a/b;
-		qs.push_back(q);
-		if(mod==0){
-			gcd=b;
-		}else{
-			gen(b,mod);
-		}
-	}
-public:
-	int a,b;
-	int gcd;
-	int s,t;//2 values of as+bt=gcd(a,b)
-	extended_euclidean_algorithm(int aa,int bb){
-		a=aa;
-		b=bb;
-		s=-1;
-		t=-1;
-		gcd=-1;
-	}
-	void change(int aa,int bb){
-		a=aa;
-		b=bb;
-		gen();
-	}
-};
+	//a是b的整数倍，gcd(a,b)=b，一组解是s=0 t=1
+	s=0;
+	t=1;
+	return b;
+}
