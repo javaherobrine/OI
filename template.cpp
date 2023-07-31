@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
-#pragma GCC optimize(3)
+using ll=long long;
+using ull=unsigned long long;
+using ld=long double;
 int main(){
 	ios::sync_with_stdio(false);
 	cin.tie(nullptr);
